@@ -25,3 +25,10 @@ npm run dev
 
 Add the same environment variables to the hosting platform. Never expose AWS
 credentials through `NEXT_PUBLIC_*` variables or commit them to the repository.
+
+## Ubuntu production deployment
+
+The repository includes a production setup for `monkeyquest.fil.one` using
+Nginx, systemd, and a Let's Encrypt certificate. See
+[`deploy/README.md`](deploy/README.md) for DNS requirements and deployment
+commands.
