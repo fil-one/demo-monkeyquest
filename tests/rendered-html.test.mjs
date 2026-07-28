@@ -33,7 +33,9 @@ test("server-renders the Monkey Quest trailer page", async () => {
 
   const html = await response.text();
   assert.match(html, /<title>Monkey Quest<\/title>/i);
+  assert.match(html, /The official trailer site for Monkey Quest\./i);
   assert.doesNotMatch(html, /The Wild Is Calling/i);
+  assert.doesNotMatch(html, /original animated adventure beyond the canopy/i);
   assert.match(html, /Hypergalactic/i);
   assert.match(html, /Watch trailer/i);
   assert.match(html, /Powered by/i);

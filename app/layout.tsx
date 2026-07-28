@@ -23,8 +23,7 @@ export async function generateMetadata(): Promise<Metadata> {
     requestHeaders.get("x-forwarded-proto") ??
     (host.startsWith("localhost") ? "http" : "https");
   const origin = `${protocol}://${host}`;
-  const description =
-    "The official trailer site for Monkey Quest, an original animated adventure beyond the canopy.";
+  const description = "The official trailer site for Monkey Quest.";
 
   return {
     title: "Monkey Quest",
