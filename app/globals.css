@@ -180,6 +180,22 @@ a {
   font-size: 19px;
 }
 
+.language select {
+  appearance: auto;
+  background: transparent;
+  border: 0;
+  color: inherit;
+  cursor: pointer;
+  font: inherit;
+  min-width: 48px;
+  outline: 0;
+}
+
+.language select option {
+  background: #fff;
+  color: #071426;
+}
+
 .hero__copy {
   bottom: 68px;
   left: max(36px, calc((100vw - 1248px) / 2));

@@ -1,16 +1,26 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { Language, translations } from "./translations";
 
 type PlayerStatus = "idle" | "loading" | "ready" | "error";
 
-export function TrailerExperience() {
+type TrailerExperienceProps = {
+  language: Language;
+  onLanguageChange: (language: Language) => void;
+};
+
+export function TrailerExperience({
+  language,
+  onLanguageChange,
+}: TrailerExperienceProps) {
   const [status, setStatus] = useState<PlayerStatus>("idle");
   const [source, setSource] = useState<string | null>(null);
   const [isPaused, setIsPaused] = useState(true);
   const [controlsVisible, setControlsVisible] = useState(true);
   const videoRef = useRef<HTMLVideoElement>(null);
   const controlsTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const copy = translations[language];
 
   const clearControlsTimer = () => {
     if (controlsTimerRef.current) {
@@ -102,7 +112,7 @@ export function TrailerExperience() {
         <a
           className="title-mark"
           href="https://monkeyquest.fil.one/"
-          aria-label="Monkey Quest home"
+          aria-label={copy.homeLabel}
         >
           <small>Hypergalactic</small>
           <span>
@@ -111,10 +121,19 @@ export function TrailerExperience() {
           </span>
         </a>
 
-        <span className="language" aria-label="English language">
+        <label className="language">
           <span aria-hidden="true">◎</span>
-          EN
-        </span>
+          <select
+            aria-label={copy.languageLabel}
+            onChange={(event) =>
+              onLanguageChange(event.target.value as Language)
+            }
+            value={language}
+          >
+            <option value="en">EN</option>
+            <option value="ja">日本語</option>
+          </select>
+        </label>
       </header>
 
       {source ? (
@@ -150,7 +169,7 @@ export function TrailerExperience() {
             ref={videoRef}
             src={source}
           >
-            Your browser does not support HTML video.
+            {copy.videoFallback}
           </video>
 
           <div
@@ -159,7 +178,7 @@ export function TrailerExperience() {
             }`}
           >
             <button
-              aria-label={isPaused ? "Play trailer" : "Pause trailer"}
+              aria-label={isPaused ? copy.playLabel : copy.pauseLabel}
               className="player-controls__toggle"
               onFocus={() => setControlsVisible(true)}
               onClick={togglePlayback}
@@ -176,7 +195,7 @@ export function TrailerExperience() {
 
       {status !== "ready" ? (
         <button
-          aria-label="Play the Monkey Quest trailer"
+          aria-label={copy.playTrailerLabel}
           className="hero__play"
           onClick={playTrailer}
           type="button"
@@ -186,12 +205,12 @@ export function TrailerExperience() {
       ) : null}
 
       <div className="hero__copy">
-        <span className="studio-label">Toei Animation</span>
-        <h1 id="hero-title">Monkey Quest</h1>
+        <span className="studio-label">{copy.studio}</span>
+        <h1 id="hero-title">{copy.title}</h1>
         <p>
-          An epic adventure across galaxies.
+          {copy.taglineLead}
           <br />
-          One monkey. One hero. Countless worlds.
+          {copy.taglineTail}
         </p>
 
         <button
@@ -201,29 +220,29 @@ export function TrailerExperience() {
           type="button"
         >
           <span aria-hidden="true" />
-          Watch Trailer
+          {copy.watchTrailer}
         </button>
 
         <div className="trailer-meta">
           <span aria-hidden="true">◷</span>
           <span>1080p</span>
           <i />
-          <span>Official Trailer</span>
+          <span>{copy.officialTrailer}</span>
         </div>
       </div>
 
       {status === "loading" ? (
         <div className="hero__status" role="status">
           <span />
-          <p>Connecting to the trailer…</p>
+          <p>{copy.connecting}</p>
         </div>
       ) : null}
 
       {status === "error" ? (
         <div className="hero__error" role="alert">
-          <p>The trailer could not be opened.</p>
+          <p>{copy.trailerError}</p>
           <button onClick={playTrailer} type="button">
-            Try again
+            {copy.tryAgain}
           </button>
         </div>
       ) : null}

@@ -1,49 +1,37 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import { TrailerExperience } from "./TrailerExperience";
-
-const features = [
-  {
-    icon: "◎",
-    title: "Epic Universe",
-    copy: "Explore breathtaking worlds across the galaxy.",
-  },
-  {
-    icon: "◉",
-    title: "Unlikely Heroes",
-    copy: "A mischievous monkey and a brave new friend.",
-  },
-  {
-    icon: "➤",
-    title: "Action & Adventure",
-    copy: "Fast-paced, fun-filled journeys await.",
-  },
-] as const;
-
-const storageFeatures = [
-  {
-    icon: "◇",
-    title: "Secure & Verifiable",
-    copy: "Content stored with verifiable integrity.",
-  },
-  {
-    icon: "◎",
-    title: "Decentralized",
-    copy: "Built for an open, resilient web.",
-  },
-  {
-    icon: "ϟ",
-    title: "Fast & Reliable",
-    copy: "Stream with confidence from a global network.",
-  },
-] as const;
+import { Language, translations } from "./translations";
 
 export default function Home() {
+  const [language, setLanguage] = useState<Language>("en");
+  const copy = translations[language];
+
+  useEffect(() => {
+    const savedLanguage = window.localStorage.getItem("monkeyquest-language");
+    if (savedLanguage === "en" || savedLanguage === "ja") {
+      setLanguage(savedLanguage);
+      document.documentElement.lang = savedLanguage;
+    }
+  }, []);
+
+  const changeLanguage = (nextLanguage: Language) => {
+    setLanguage(nextLanguage);
+    document.documentElement.lang = nextLanguage;
+    window.localStorage.setItem("monkeyquest-language", nextLanguage);
+  };
+
   return (
     <main>
-      <TrailerExperience />
+      <TrailerExperience
+        language={language}
+        onLanguageChange={changeLanguage}
+      />
 
       <div className="content-shell">
-        <section className="feature-strip" aria-label="Film highlights">
-          {features.map((feature) => (
+        <section className="feature-strip" aria-label={copy.highlightsLabel}>
+          {copy.features.map((feature) => (
             <article className="feature" key={feature.title}>
               <span className="feature__icon" aria-hidden="true">
                 {feature.icon}
@@ -62,8 +50,8 @@ export default function Home() {
                 height="78"
               />
             </div>
-            <h2>Made by Toei Animation</h2>
-            <p>Bringing unforgettable stories to life.</p>
+            <h2>{copy.madeBy}</h2>
+            <p>{copy.madeByCopy}</p>
           </article>
         </section>
 
@@ -78,13 +66,13 @@ export default function Home() {
               />
             </span>
             <div>
-              <p>Powered by</p>
+              <p>{copy.poweredBy}</p>
               <h2 id="filecoin-title">Filecoin</h2>
             </div>
           </div>
 
           <div className="storage-features">
-            {storageFeatures.map((feature) => (
+            {copy.storageFeatures.map((feature) => (
               <article key={feature.title}>
                 <span aria-hidden="true">{feature.icon}</span>
                 <div>
@@ -109,7 +97,8 @@ export default function Home() {
           </div>
           <i />
           <p>
-            Built on <a href="https://filecoin.io/">Filecoin</a>. For everyone.
+            {copy.builtOnLead}{" "}
+            <a href="https://filecoin.io/">Filecoin</a>. {copy.builtOnTail}
           </p>
         </footer>
       </div>

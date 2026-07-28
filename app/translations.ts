@@ -1,0 +1,118 @@
+export type Language = "en" | "ja";
+
+export const translations = {
+  en: {
+    languageLabel: "Select language",
+    homeLabel: "Monkey Quest home",
+    playLabel: "Play trailer",
+    pauseLabel: "Pause trailer",
+    playTrailerLabel: "Play the Monkey Quest trailer",
+    videoFallback: "Your browser does not support HTML video.",
+    studio: "Toei Animation",
+    title: "Monkey Quest",
+    taglineLead: "An epic adventure across galaxies.",
+    taglineTail: "One monkey. One hero. Countless worlds.",
+    watchTrailer: "Watch Trailer",
+    officialTrailer: "Official Trailer",
+    connecting: "Connecting to the trailer…",
+    trailerError: "The trailer could not be opened.",
+    tryAgain: "Try again",
+    highlightsLabel: "Film highlights",
+    features: [
+      {
+        icon: "◎",
+        title: "Epic Universe",
+        copy: "Explore breathtaking worlds across the galaxy.",
+      },
+      {
+        icon: "◉",
+        title: "Unlikely Heroes",
+        copy: "A mischievous monkey and a brave new friend.",
+      },
+      {
+        icon: "➤",
+        title: "Action & Adventure",
+        copy: "Fast-paced, fun-filled journeys await.",
+      },
+    ],
+    madeBy: "Made by Toei Animation",
+    madeByCopy: "Bringing unforgettable stories to life.",
+    poweredBy: "Powered by",
+    storageFeatures: [
+      {
+        icon: "◇",
+        title: "Secure & Verifiable",
+        copy: "Content stored with verifiable integrity.",
+      },
+      {
+        icon: "◎",
+        title: "Decentralized",
+        copy: "Built for an open, resilient web.",
+      },
+      {
+        icon: "ϟ",
+        title: "Fast & Reliable",
+        copy: "Stream with confidence from a global network.",
+      },
+    ],
+    builtOnLead: "Built on",
+    builtOnTail: "For everyone.",
+  },
+  ja: {
+    languageLabel: "言語を選択",
+    homeLabel: "モンキークエスト ホーム",
+    playLabel: "予告編を再生",
+    pauseLabel: "予告編を一時停止",
+    playTrailerLabel: "モンキークエストの予告編を再生",
+    videoFallback: "お使いのブラウザは動画再生に対応していません。",
+    studio: "東映アニメーション",
+    title: "モンキークエスト",
+    taglineLead: "銀河を駆ける壮大な冒険。",
+    taglineTail: "一匹のサル。一人のヒーロー。無限の世界。",
+    watchTrailer: "予告編を見る",
+    officialTrailer: "公式予告編",
+    connecting: "予告編に接続しています…",
+    trailerError: "予告編を再生できませんでした。",
+    tryAgain: "もう一度試す",
+    highlightsLabel: "作品の見どころ",
+    features: [
+      {
+        icon: "◎",
+        title: "壮大な宇宙",
+        copy: "銀河に広がる息をのむ世界を冒険しよう。",
+      },
+      {
+        icon: "◉",
+        title: "意外なヒーローたち",
+        copy: "いたずら好きなサルと勇敢な新しい仲間。",
+      },
+      {
+        icon: "➤",
+        title: "アクション＆アドベンチャー",
+        copy: "スピード感あふれる楽しい旅が待っている。",
+      },
+    ],
+    madeBy: "東映アニメーション制作",
+    madeByCopy: "忘れられない物語に命を吹き込みます。",
+    poweredBy: "提供",
+    storageFeatures: [
+      {
+        icon: "◇",
+        title: "安全で検証可能",
+        copy: "検証可能な完全性を保って保存します。",
+      },
+      {
+        icon: "◎",
+        title: "分散型",
+        copy: "オープンで強靭なウェブのために。",
+      },
+      {
+        icon: "ϟ",
+        title: "高速で信頼性",
+        copy: "グローバルネットワークから安心して配信。",
+      },
+    ],
+    builtOnLead: "構築基盤：",
+    builtOnTail: "すべての人へ。",
+  },
+} as const;
