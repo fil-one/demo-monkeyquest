@@ -6,9 +6,9 @@ operation is issuing a short-lived URL when a viewer opens the trailer.
 
 ## Configure the trailer
 
-Copy `.env.example` to `.env.local` and add the AWS credentials, region, bucket,
-and object key for the private MP4. Use an IAM principal that can only read the
-specific trailer object.
+Copy `.env.example` to `.env.local` and add the S3-compatible endpoint,
+credentials, region, bucket, and object key for the private MP4. Use an access
+key that can only read the specific trailer object.
 
 The S3 object should be served with `Content-Type: video/mp4` and support byte
 range requests. The browser requests `/api/trailer`, receives a short-lived

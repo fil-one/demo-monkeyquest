@@ -41,6 +41,7 @@ export async function GET() {
     const url = await createS3PresignedUrl({
       accessKeyId,
       bucket,
+      endpoint: process.env.S3_ENDPOINT,
       expiresIn,
       objectKey,
       region,

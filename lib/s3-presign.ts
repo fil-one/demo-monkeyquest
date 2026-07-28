@@ -3,6 +3,7 @@ const encoder = new TextEncoder();
 type PresignOptions = {
   accessKeyId: string;
   bucket: string;
+  endpoint?: string;
   expiresIn: number;
   objectKey: string;
   region: string;
@@ -51,6 +52,7 @@ function canonicalQuery(parameters: Record<string, string>) {
 export async function createS3PresignedUrl({
   accessKeyId,
   bucket,
+  endpoint,
   expiresIn,
   objectKey,
   region,
@@ -61,12 +63,24 @@ export async function createS3PresignedUrl({
   const amzDate = now.toISOString().replace(/[:-]|\.\d{3}/g, "");
   const dateStamp = amzDate.slice(0, 8);
   const credentialScope = `${dateStamp}/${region}/s3/aws4_request`;
-  const host = `${bucket}.s3.${region}.amazonaws.com`;
-  const canonicalUri = `/${objectKey
+  const configuredEndpoint = endpoint
+    ? new URL(endpoint)
+    : new URL(`https://${bucket}.s3.${region}.amazonaws.com`);
+
+  if (configuredEndpoint.protocol !== "https:") {
+    throw new Error("S3 endpoint must use HTTPS");
+  }
+
+  const host = configuredEndpoint.host;
+  const endpointPath = configuredEndpoint.pathname.replace(/\/+$/, "");
+  const objectPath = objectKey
     .replace(/^\/+/, "")
     .split("/")
     .map(encodeAwsValue)
-    .join("/")}`;
+    .join("/");
+  const canonicalUri = endpoint
+    ? `${endpointPath}/${encodeAwsValue(bucket)}/${objectPath}`
+    : `/${objectPath}`;
 
   const parameters: Record<string, string> = {
     "X-Amz-Algorithm": "AWS4-HMAC-SHA256",
@@ -74,8 +88,6 @@ export async function createS3PresignedUrl({
     "X-Amz-Date": amzDate,
     "X-Amz-Expires": String(expiresIn),
     "X-Amz-SignedHeaders": "host",
-    "response-content-disposition": "inline",
-    "response-content-type": "video/mp4",
   };
 
   if (sessionToken) {
@@ -104,5 +116,5 @@ export async function createS3PresignedUrl({
   const signingKey = await hmac(serviceKey, "aws4_request");
   const signature = toHex(await hmac(signingKey, stringToSign));
 
-  return `https://${host}${canonicalUri}?${query}&X-Amz-Signature=${signature}`;
+  return `${configuredEndpoint.protocol}//${host}${canonicalUri}?${query}&X-Amz-Signature=${signature}`;
 }

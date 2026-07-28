@@ -34,9 +34,9 @@ export async function generateMetadata(): Promise<Metadata> {
       images: [
         {
           alt: "Monkey Quest — The Wild Is Calling",
-          height: 909,
+          height: 941,
           url: new URL("/og.png", origin).toString(),
-          width: 1731,
+          width: 1672,
         },
       ],
       siteName: "Monkey Quest",

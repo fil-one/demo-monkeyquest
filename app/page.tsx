@@ -1,118 +1,130 @@
-import { siteContent } from "@/content/site";
-import { TrailerPlayer } from "./TrailerPlayer";
+import { TrailerExperience } from "./TrailerExperience";
+
+const features = [
+  {
+    icon: "◎",
+    title: "Epic Universe",
+    copy: "Explore breathtaking worlds across the galaxy.",
+  },
+  {
+    icon: "◉",
+    title: "Unlikely Heroes",
+    copy: "A mischievous monkey and a brave new friend.",
+  },
+  {
+    icon: "➤",
+    title: "Action & Adventure",
+    copy: "Fast-paced, fun-filled journeys await.",
+  },
+] as const;
+
+const storageFeatures = [
+  {
+    icon: "◇",
+    title: "Secure & Verifiable",
+    copy: "Content stored with verifiable integrity.",
+  },
+  {
+    icon: "◎",
+    title: "Decentralized",
+    copy: "Built for an open, resilient web.",
+  },
+  {
+    icon: "ϟ",
+    title: "Fast & Reliable",
+    copy: "Stream with confidence from a global network.",
+  },
+] as const;
 
 export default function Home() {
   return (
     <main>
-      <section className="hero" aria-labelledby="hero-title">
-        <div className="hero__atmosphere" aria-hidden="true">
-          <span className="hero__moon" />
-          <span className="hero__ridge hero__ridge--back" />
-          <span className="hero__ridge hero__ridge--front" />
-          <span className="hero__glow" />
-          <span className="hero__grain" />
-        </div>
+      <TrailerExperience />
 
-        <header className="site-header">
-          <a className="brand" href="#top" aria-label="Monkey Quest home">
-            <span>MQ</span>
-            <small>Monkey Quest</small>
-          </a>
-
-          <nav aria-label="Main navigation">
-            <a href="#story">Story</a>
-            <a href="#journey">The journey</a>
-          </nav>
-
-          <a className="header-cta" href="#trailer">
-            Watch trailer
-          </a>
-        </header>
-
-        <div className="hero__content" id="top">
-          <p className="eyebrow">
-            <span />
-            {siteContent.eyebrow}
-          </p>
-
-          <h1 id="hero-title">
-            <span>Monkey</span>
-            <span>Quest</span>
-          </h1>
-
-          <div className="hero__lower">
-            <div className="hero__tagline">
-              <p>{siteContent.tagline}</p>
-              <span>Coming soon</span>
-            </div>
-            <TrailerPlayer />
-          </div>
-        </div>
-
-        <div className="hero__scroll" aria-hidden="true">
-          <span />
-          <small>Enter the wild</small>
-        </div>
-      </section>
-
-      <section className="story" id="story" aria-labelledby="story-title">
-        <div className="story__intro">
-          <p className="section-label">The story</p>
-          <h2 id="story-title">{siteContent.quote}</h2>
-        </div>
-
-        <div className="story__copy">
-          <p>{siteContent.synopsis}</p>
-          <p>{siteContent.story}</p>
-        </div>
-
-        <dl className="facts">
-          {siteContent.facts.map(([term, description]) => (
-            <div key={term}>
-              <dt>{term}</dt>
-              <dd>{description}</dd>
-            </div>
-          ))}
-        </dl>
-      </section>
-
-      <section className="journey" id="journey" aria-labelledby="journey-title">
-        <div className="journey__heading">
-          <p className="section-label">Beyond the canopy</p>
-          <h2 id="journey-title">
-            The map ends.
-            <br />
-            The adventure begins.
-          </h2>
-        </div>
-
-        <div className="chapters">
-          {siteContent.chapters.map((chapter) => (
-            <article className="chapter" key={chapter.number}>
-              <span>{chapter.number}</span>
-              <div>
-                <h3>{chapter.title}</h3>
-                <p>{chapter.body}</p>
-              </div>
+      <div className="content-shell">
+        <section className="feature-strip" aria-label="Film highlights">
+          {features.map((feature) => (
+            <article className="feature" key={feature.title}>
+              <span className="feature__icon" aria-hidden="true">
+                {feature.icon}
+              </span>
+              <h2>{feature.title}</h2>
+              <p>{feature.copy}</p>
             </article>
           ))}
-        </div>
-      </section>
 
-      <section className="finale" aria-label="Watch Monkey Quest">
-        <p className="section-label">Take the leap</p>
-        <p className="finale__title">Monkey Quest</p>
-        <a href="#trailer">Watch the official trailer</a>
-      </section>
+          <article className="feature feature--studio">
+            <div className="toei-badge">
+              <img
+                alt="Toei Animation"
+                src="/toei-animation.png"
+                width="597"
+                height="78"
+              />
+            </div>
+            <h2>Made by Toei Animation</h2>
+            <p>Bringing unforgettable stories to life.</p>
+          </article>
+        </section>
 
-      <footer>
-        <a className="brand brand--footer" href="#top">
-          <span>MQ</span>
-          <small>Monkey Quest</small>
-        </a>
-        <p>© 2026 Monkey Quest. All rights reserved.</p>
-        <a href="#top">Back to top ↑</a>
-      </footer>
+        <section className="about" aria-labelledby="about-title">
+          <p className="section-kicker">A brand-new animated adventure</p>
+          <h2 id="about-title">About Monkey Quest</h2>
+          <p>
+            From Toei Animation comes a journey where friendship, courage, and
+            curiosity take our heroes beyond the stars.
+          </p>
+        </section>
+
+        <section className="filecoin-panel" aria-labelledby="filecoin-title">
+          <div className="filecoin-panel__brand">
+            <span className="filecoin-orb">
+              <img
+                alt=""
+                src="/filecoin.svg"
+                width="40"
+                height="40"
+              />
+            </span>
+            <div>
+              <p>Powered by</p>
+              <h2 id="filecoin-title">Filecoin</h2>
+            </div>
+          </div>
+
+          <div className="storage-features">
+            {storageFeatures.map((feature) => (
+              <article key={feature.title}>
+                <span aria-hidden="true">{feature.icon}</span>
+                <div>
+                  <h3>{feature.title}</h3>
+                  <p>{feature.copy}</p>
+                </div>
+              </article>
+            ))}
+          </div>
+
+          <p className="filecoin-panel__tagline">
+            Decentralized storage for a decentralized future.
+          </p>
+        </section>
+
+        <footer>
+          <div className="footer-domain">
+            <img
+              alt="Filecoin"
+              src="/filecoin.svg"
+              width="40"
+              height="40"
+            />
+            <strong>monkeyquest.fil.one</strong>
+          </div>
+          <i />
+          <p>
+            Built on <a href="https://filecoin.io/">Filecoin</a>. For everyone.
+          </p>
+        </footer>
+      </div>
     </main>
   );
 }
