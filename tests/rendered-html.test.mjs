@@ -32,7 +32,8 @@ test("server-renders the Monkey Quest trailer page", async () => {
   assert.match(response.headers.get("content-type") ?? "", /^text\/html\b/i);
 
   const html = await response.text();
-  assert.match(html, /<title>Monkey Quest — The Wild Is Calling<\/title>/i);
+  assert.match(html, /<title>Monkey Quest<\/title>/i);
+  assert.doesNotMatch(html, /The Wild Is Calling/i);
   assert.match(html, /Hypergalactic/i);
   assert.match(html, /Watch trailer/i);
   assert.match(html, /Powered by/i);

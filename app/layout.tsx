@@ -27,20 +27,20 @@ export async function generateMetadata(): Promise<Metadata> {
     "The official trailer site for Monkey Quest, an original animated adventure beyond the canopy.";
 
   return {
-    title: "Monkey Quest — The Wild Is Calling",
+    title: "Monkey Quest",
     description,
     openGraph: {
       description,
       images: [
         {
-          alt: "Monkey Quest — The Wild Is Calling",
+          alt: "Monkey Quest",
           height: 941,
           url: new URL("/og.png", origin).toString(),
           width: 1672,
         },
       ],
       siteName: "Monkey Quest",
-      title: "Monkey Quest — The Wild Is Calling",
+      title: "Monkey Quest",
       type: "website",
       url: origin,
     },
@@ -48,7 +48,7 @@ export async function generateMetadata(): Promise<Metadata> {
       card: "summary_large_image",
       description,
       images: [new URL("/og.png", origin).toString()],
-      title: "Monkey Quest — The Wild Is Calling",
+      title: "Monkey Quest",
     },
   };
 }
