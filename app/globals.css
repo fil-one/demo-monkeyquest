@@ -352,19 +352,83 @@ a {
   padding: 10px 17px;
 }
 
-.hero__return {
-  background: rgba(2, 10, 23, 0.82);
-  border: 1px solid rgba(255, 255, 255, 0.42);
+.player-banner {
+  align-items: center;
+  backdrop-filter: blur(16px);
+  background: linear-gradient(90deg, rgba(2, 10, 23, 0.94), rgba(8, 25, 48, 0.84));
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 14px;
+  display: flex;
+  justify-content: space-between;
+  left: 50%;
+  max-width: 1120px;
+  padding: 13px 15px 13px 20px;
+  position: absolute;
+  top: 118px;
+  transform: translateX(-50%);
+  width: calc(100% - 72px);
+  z-index: 8;
+}
+
+.player-banner__title {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.player-banner__title span {
+  color: var(--red-hot);
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.player-banner__title strong {
+  font-size: 14px;
+}
+
+.player-banner__actions {
+  align-items: center;
+  display: flex;
+  gap: 10px;
+}
+
+.player-banner__actions button {
   border-radius: 999px;
-  bottom: 42px;
   font-size: 11px;
   font-weight: 800;
-  letter-spacing: 0.08em;
-  padding: 12px 18px;
-  position: absolute;
-  right: 36px;
+  letter-spacing: 0.06em;
+  padding: 11px 16px;
   text-transform: uppercase;
-  z-index: 8;
+}
+
+.player-banner__toggle {
+  align-items: center;
+  background: var(--red);
+  border: 0;
+  display: inline-flex;
+  gap: 9px;
+}
+
+.player-banner__return {
+  background: rgba(2, 10, 23, 0.72);
+  border: 1px solid rgba(255, 255, 255, 0.32);
+}
+
+.control-play {
+  border-bottom: 5px solid transparent;
+  border-left: 8px solid #fff;
+  border-top: 5px solid transparent;
+  display: block;
+}
+
+.control-pause {
+  border-left: 3px solid #fff;
+  border-right: 3px solid #fff;
+  display: block;
+  height: 11px;
+  width: 9px;
 }
 
 .content-shell {
@@ -516,8 +580,8 @@ a {
 
 .filecoin-orb {
   align-items: center;
-  background: linear-gradient(145deg, #168fff, #075bdc);
-  border: 1px solid #47aaff;
+  background: transparent;
+  border: 0;
   border-radius: 50%;
   box-shadow:
     0 0 0 8px rgba(0, 137, 255, 0.06),
@@ -530,9 +594,8 @@ a {
 }
 
 .filecoin-orb img {
-  filter: brightness(0) invert(1);
-  height: 62px;
-  width: 62px;
+  height: 102px;
+  width: 102px;
 }
 
 .filecoin-panel__brand p {
@@ -580,14 +643,6 @@ a {
   font-size: 11px;
   line-height: 1.55;
   margin: 0;
-}
-
-.filecoin-panel__tagline {
-  color: #d3dceb;
-  font-size: 18px;
-  grid-column: 1 / -1;
-  margin: 6px 0 0;
-  text-align: center;
 }
 
 footer {
@@ -774,9 +829,23 @@ footer > p a {
     margin-top: 17px;
   }
 
-  .hero__return {
-    bottom: 28px;
-    right: 18px;
+  .player-banner {
+    align-items: stretch;
+    flex-direction: column;
+    gap: 12px;
+    padding: 13px;
+    top: 94px;
+    width: calc(100% - 28px);
+  }
+
+  .player-banner__actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .player-banner__actions button {
+    justify-content: center;
+    padding: 10px 12px;
   }
 
   .content-shell {
@@ -840,8 +909,8 @@ footer > p a {
   }
 
   .filecoin-orb img {
-    height: 48px;
-    width: 48px;
+    height: 78px;
+    width: 78px;
   }
 
   .filecoin-panel__brand p {
@@ -865,11 +934,6 @@ footer > p a {
 
   .storage-features article:last-child {
     padding-bottom: 0;
-  }
-
-  .filecoin-panel__tagline {
-    font-size: 15px;
-    line-height: 1.5;
   }
 
   footer {

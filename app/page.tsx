@@ -104,9 +104,6 @@ export default function Home() {
             ))}
           </div>
 
-          <p className="filecoin-panel__tagline">
-            Decentralized storage for a decentralized future.
-          </p>
         </section>
 
         <footer>

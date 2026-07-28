@@ -7,13 +7,14 @@ type PlayerStatus = "idle" | "loading" | "ready" | "error";
 export function TrailerExperience() {
   const [status, setStatus] = useState<PlayerStatus>("idle");
   const [source, setSource] = useState<string | null>(null);
+  const [isPaused, setIsPaused] = useState(true);
   const videoRef = useRef<HTMLVideoElement>(null);
 
   const playTrailer = async () => {
     if (status === "loading") return;
     if (source) {
       setStatus("ready");
-      void videoRef.current?.play();
+      void videoRef.current?.play().then(() => setIsPaused(false));
       return;
     }
 
@@ -40,14 +41,27 @@ export function TrailerExperience() {
     if (status !== "ready" || !source || !videoRef.current) return;
 
     videoRef.current.load();
-    void videoRef.current.play().catch(() => {
-      // Native controls remain available when autoplay is blocked.
-    });
+    void videoRef.current
+      .play()
+      .then(() => setIsPaused(false))
+      .catch(() => setIsPaused(true));
   }, [source, status]);
 
   const resetTrailer = () => {
     videoRef.current?.pause();
+    setIsPaused(true);
     setStatus("idle");
+  };
+
+  const togglePlayback = () => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    if (video.paused) {
+      void video.play();
+    } else {
+      video.pause();
+    }
   };
 
   return (
@@ -69,6 +83,8 @@ export function TrailerExperience() {
             className="hero__video"
             controls
             onError={() => setStatus("error")}
+            onPause={() => setIsPaused(true)}
+            onPlay={() => setIsPaused(false)}
             playsInline
             poster="/hero-keyart.png"
             preload="metadata"
@@ -157,13 +173,33 @@ export function TrailerExperience() {
       ) : null}
 
       {status === "ready" ? (
-        <button
-          className="hero__return"
-          onClick={resetTrailer}
-          type="button"
-        >
-          Back to poster
-        </button>
+        <div className="player-banner">
+          <div className="player-banner__title">
+            <span>Now playing</span>
+            <strong>Monkey Quest · Official Trailer</strong>
+          </div>
+          <div className="player-banner__actions">
+            <button
+              aria-label={isPaused ? "Play trailer" : "Pause trailer"}
+              className="player-banner__toggle"
+              onClick={togglePlayback}
+              type="button"
+            >
+              <span
+                aria-hidden="true"
+                className={isPaused ? "control-play" : "control-pause"}
+              />
+              {isPaused ? "Play" : "Pause"}
+            </button>
+            <button
+              className="player-banner__return"
+              onClick={resetTrailer}
+              type="button"
+            >
+              Back to poster
+            </button>
+          </div>
+        </div>
       ) : null}
     </section>
   );
