@@ -38,23 +38,6 @@ export const translations = {
     madeBy: "Made by Toei Animation",
     madeByCopy: "Bringing unforgettable stories to life.",
     poweredBy: "Powered by",
-    storageFeatures: [
-      {
-        icon: "◇",
-        title: "Secure & Verifiable",
-        copy: "Content stored with verifiable integrity.",
-      },
-      {
-        icon: "◎",
-        title: "Decentralized",
-        copy: "Built for an open, resilient web.",
-      },
-      {
-        icon: "ϟ",
-        title: "Fast & Reliable",
-        copy: "Stream with confidence from a global network.",
-      },
-    ],
     builtOnLead: "Built on",
     builtOnTail: "For everyone.",
   },
@@ -95,23 +78,6 @@ export const translations = {
     madeBy: "東映アニメーション制作",
     madeByCopy: "忘れられない物語に命を吹き込みます。",
     poweredBy: "提供",
-    storageFeatures: [
-      {
-        icon: "◇",
-        title: "安全で検証可能",
-        copy: "検証可能な完全性を保って保存します。",
-      },
-      {
-        icon: "◎",
-        title: "分散型",
-        copy: "オープンで強靭なウェブのために。",
-      },
-      {
-        icon: "ϟ",
-        title: "高速で信頼性",
-        copy: "グローバルネットワークから安心して配信。",
-      },
-    ],
     builtOnLead: "構築基盤：",
     builtOnTail: "すべての人へ。",
   },

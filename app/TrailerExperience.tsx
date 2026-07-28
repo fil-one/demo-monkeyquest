@@ -121,6 +121,17 @@ export function TrailerExperience({
           </span>
         </a>
 
+        <div
+          className="header-filecoin"
+          aria-label={`${copy.poweredBy} Filecoin`}
+        >
+          <img alt="" src="/filecoin.svg" width="64" height="64" />
+          <span>
+            <small>{copy.poweredBy}</small>
+            <strong>Filecoin</strong>
+          </span>
+        </div>
+
         <label className="language">
           <span aria-hidden="true">◎</span>
           <select

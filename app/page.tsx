@@ -55,36 +55,6 @@ export default function Home() {
           </article>
         </section>
 
-        <section className="filecoin-panel" aria-labelledby="filecoin-title">
-          <div className="filecoin-panel__brand">
-            <span className="filecoin-orb">
-              <img
-                alt=""
-                src="/filecoin.svg"
-                width="40"
-                height="40"
-              />
-            </span>
-            <div>
-              <p>{copy.poweredBy}</p>
-              <h2 id="filecoin-title">Filecoin</h2>
-            </div>
-          </div>
-
-          <div className="storage-features">
-            {copy.storageFeatures.map((feature) => (
-              <article key={feature.title}>
-                <span aria-hidden="true">{feature.icon}</span>
-                <div>
-                  <h3>{feature.title}</h3>
-                  <p>{feature.copy}</p>
-                </div>
-              </article>
-            ))}
-          </div>
-
-        </section>
-
         <footer>
           <div className="footer-domain">
             <img

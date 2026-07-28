@@ -36,11 +36,13 @@ test("server-renders the Monkey Quest trailer page", async () => {
   assert.match(html, /Hypergalactic/i);
   assert.match(html, /Watch trailer/i);
   assert.match(html, /Powered by/i);
+  assert.match(html, /class="header-filecoin"/i);
   assert.match(html, /Toei Animation/i);
   assert.match(html, /Filecoin/i);
   assert.match(html, /href="https:\/\/monkeyquest\.fil\.one\/"/i);
   assert.match(html, /<option value="ja">日本語<\/option>/i);
   assert.doesNotMatch(html, /<nav\b|About Monkey Quest|Behind the Scenes/i);
+  assert.doesNotMatch(html, /class="filecoin-panel"/i);
   assert.doesNotMatch(html, /codex-preview|react-loading-skeleton/i);
 });
 

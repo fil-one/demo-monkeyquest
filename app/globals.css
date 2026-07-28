@@ -109,7 +109,7 @@ a {
   align-items: center;
   display: grid;
   gap: 30px;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr auto 1fr;
   left: 50%;
   max-width: 1320px;
   padding: 28px 36px;
@@ -162,6 +162,38 @@ a {
   text-shadow:
     0 3px 0 #9d3900,
     0 6px 14px rgba(0, 0, 0, 0.8);
+}
+
+.header-filecoin {
+  align-items: center;
+  display: inline-flex;
+  gap: 13px;
+  justify-self: center;
+}
+
+.header-filecoin img {
+  filter: drop-shadow(0 0 14px rgba(0, 137, 255, 0.34));
+  height: 64px;
+  width: 64px;
+}
+
+.header-filecoin > span {
+  display: flex;
+  flex-direction: column;
+  line-height: 1;
+}
+
+.header-filecoin small {
+  font-size: 13px;
+  font-weight: 750;
+  margin-bottom: 7px;
+}
+
+.header-filecoin strong {
+  color: var(--blue);
+  font-family: var(--font-display), sans-serif;
+  font-size: 27px;
+  letter-spacing: -0.04em;
 }
 
 .language {
@@ -527,110 +559,6 @@ a {
   width: 100%;
 }
 
-.filecoin-panel {
-  background:
-    radial-gradient(circle at 92% 50%, rgba(0, 128, 255, 0.17), transparent 25%),
-    linear-gradient(110deg, rgba(3, 14, 31, 0.95), rgba(2, 10, 23, 0.95));
-  border: 1px solid var(--blue);
-  border-radius: 18px;
-  display: grid;
-  gap: 30px;
-  grid-template-columns: 1.05fr 2.3fr;
-  margin: -12px auto 0;
-  max-width: 1248px;
-  overflow: hidden;
-  padding: 38px 38px 26px;
-  position: relative;
-}
-
-.filecoin-panel::after {
-  background-image: radial-gradient(rgba(0, 144, 255, 0.72) 1px, transparent 1px);
-  background-size: 24px 24px;
-  content: "";
-  height: 220px;
-  opacity: 0.18;
-  position: absolute;
-  right: -10px;
-  top: -20px;
-  transform: perspective(300px) rotateY(-28deg);
-  width: 230px;
-}
-
-.filecoin-panel__brand {
-  align-items: center;
-  display: flex;
-  gap: 23px;
-  position: relative;
-  z-index: 1;
-}
-
-.filecoin-orb {
-  align-items: center;
-  background: transparent;
-  border: 0;
-  border-radius: 50%;
-  box-shadow:
-    0 0 0 8px rgba(0, 137, 255, 0.06),
-    0 0 36px rgba(0, 137, 255, 0.36);
-  display: flex;
-  flex: 0 0 auto;
-  height: 102px;
-  justify-content: center;
-  width: 102px;
-}
-
-.filecoin-orb img {
-  height: 102px;
-  width: 102px;
-}
-
-.filecoin-panel__brand p {
-  font-size: 21px;
-  font-weight: 700;
-  margin: 0 0 2px;
-}
-
-.filecoin-panel__brand h2 {
-  color: var(--blue);
-  font-family: var(--font-display), sans-serif;
-  font-size: 40px;
-  letter-spacing: -0.04em;
-  margin: 0;
-}
-
-.storage-features {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  position: relative;
-  z-index: 1;
-}
-
-.storage-features article {
-  align-items: flex-start;
-  border-left: 1px solid var(--line);
-  display: flex;
-  gap: 13px;
-  padding: 9px 20px;
-}
-
-.storage-features article > span {
-  color: var(--blue);
-  font-size: 34px;
-  line-height: 1;
-}
-
-.storage-features h3 {
-  font-size: 13px;
-  margin: 1px 0 10px;
-}
-
-.storage-features p {
-  color: var(--muted);
-  font-size: 11px;
-  line-height: 1.55;
-  margin: 0;
-}
-
 footer {
   align-items: center;
   background: rgba(3, 13, 28, 0.94);
@@ -719,13 +647,6 @@ footer > p a {
     border-bottom: 1px solid var(--line);
   }
 
-  .filecoin-panel {
-    grid-template-columns: 1fr;
-  }
-
-  .storage-features article:first-child {
-    border-left: 0;
-  }
 }
 
 @media (max-width: 620px) {
@@ -744,8 +665,8 @@ footer > p a {
   }
 
   .site-header {
-    grid-template-columns: 1fr auto;
-    gap: 18px;
+    gap: 10px;
+    grid-template-columns: 1fr auto 1fr;
     padding: 18px 18px;
   }
 
@@ -755,6 +676,24 @@ footer > p a {
 
   .title-mark > span {
     font-size: 22px;
+  }
+
+  .header-filecoin {
+    gap: 7px;
+  }
+
+  .header-filecoin img {
+    height: 38px;
+    width: 38px;
+  }
+
+  .header-filecoin small {
+    font-size: 8px;
+    margin-bottom: 4px;
+  }
+
+  .header-filecoin strong {
+    font-size: 17px;
   }
 
   .language {
@@ -873,49 +812,6 @@ footer > p a {
 
   .toei-badge {
     max-width: 145px;
-  }
-
-  .filecoin-panel {
-    border-radius: 14px;
-    gap: 28px;
-    padding: 28px 20px 22px;
-  }
-
-  .filecoin-panel__brand {
-    justify-content: center;
-  }
-
-  .filecoin-orb {
-    height: 78px;
-    width: 78px;
-  }
-
-  .filecoin-orb img {
-    height: 78px;
-    width: 78px;
-  }
-
-  .filecoin-panel__brand p {
-    font-size: 17px;
-  }
-
-  .filecoin-panel__brand h2 {
-    font-size: 34px;
-  }
-
-  .storage-features {
-    grid-template-columns: 1fr;
-  }
-
-  .storage-features article,
-  .storage-features article:first-child {
-    border-left: 0;
-    border-top: 1px solid var(--line);
-    padding: 17px 0;
-  }
-
-  .storage-features article:last-child {
-    padding-bottom: 0;
   }
 
   footer {
