@@ -38,7 +38,8 @@ test("server-renders the Monkey Quest trailer page", async () => {
   assert.match(html, /Powered by/i);
   assert.match(html, /Toei Animation/i);
   assert.match(html, /Filecoin/i);
-  assert.doesNotMatch(html, />About<\/a>|>Gallery<\/a>|Behind the Scenes/i);
+  assert.match(html, /href="https:\/\/monkeyquest\.fil\.one\/"/i);
+  assert.doesNotMatch(html, /<nav\b|About Monkey Quest|Behind the Scenes/i);
   assert.doesNotMatch(html, /codex-preview|react-loading-skeleton/i);
 });
 

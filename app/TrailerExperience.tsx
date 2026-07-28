@@ -99,19 +99,17 @@ export function TrailerExperience() {
       </div>
 
       <header className="site-header">
-        <a className="title-mark" href="#trailer" aria-label="Monkey Quest home">
+        <a
+          className="title-mark"
+          href="https://monkeyquest.fil.one/"
+          aria-label="Monkey Quest home"
+        >
           <small>Hypergalactic</small>
           <span>
             Monkey
             <b>Quest</b>
           </span>
         </a>
-
-        <nav aria-label="Main navigation">
-          <a aria-current="page" href="#trailer">
-            Trailer
-          </a>
-        </nav>
 
         <span className="language" aria-label="English language">
           <span aria-hidden="true">◎</span>

@@ -67,15 +67,6 @@ export default function Home() {
           </article>
         </section>
 
-        <section className="about" aria-labelledby="about-title">
-          <p className="section-kicker">A brand-new animated adventure</p>
-          <h2 id="about-title">About Monkey Quest</h2>
-          <p>
-            From Toei Animation comes a journey where friendship, courage, and
-            curiosity take our heroes beyond the stars.
-          </p>
-        </section>
-
         <section className="filecoin-panel" aria-labelledby="filecoin-title">
           <div className="filecoin-panel__brand">
             <span className="filecoin-orb">
