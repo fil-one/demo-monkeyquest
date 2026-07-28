@@ -8,7 +8,27 @@ export function TrailerExperience() {
   const [status, setStatus] = useState<PlayerStatus>("idle");
   const [source, setSource] = useState<string | null>(null);
   const [isPaused, setIsPaused] = useState(true);
+  const [controlsVisible, setControlsVisible] = useState(true);
   const videoRef = useRef<HTMLVideoElement>(null);
+  const controlsTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const clearControlsTimer = () => {
+    if (controlsTimerRef.current) {
+      clearTimeout(controlsTimerRef.current);
+      controlsTimerRef.current = null;
+    }
+  };
+
+  const showControlsThenFade = () => {
+    clearControlsTimer();
+    setControlsVisible(true);
+
+    if (!videoRef.current?.paused) {
+      controlsTimerRef.current = setTimeout(() => {
+        setControlsVisible(false);
+      }, 1600);
+    }
+  };
 
   const playTrailer = async () => {
     if (status === "loading") return;
@@ -47,16 +67,13 @@ export function TrailerExperience() {
       .catch(() => setIsPaused(true));
   }, [source, status]);
 
-  const resetTrailer = () => {
-    videoRef.current?.pause();
-    setIsPaused(true);
-    setStatus("idle");
-  };
+  useEffect(() => () => clearControlsTimer(), []);
 
   const togglePlayback = () => {
     const video = videoRef.current;
     if (!video) return;
 
+    setControlsVisible(true);
     if (video.paused) {
       void video.play();
     } else {
@@ -78,22 +95,6 @@ export function TrailerExperience() {
           width="1672"
           height="941"
         />
-        {source ? (
-          <video
-            className="hero__video"
-            controls
-            onError={() => setStatus("error")}
-            onPause={() => setIsPaused(true)}
-            onPlay={() => setIsPaused(false)}
-            playsInline
-            poster="/hero-keyart.png"
-            preload="metadata"
-            ref={videoRef}
-            src={source}
-          >
-            Your browser does not support HTML video.
-          </video>
-        ) : null}
         <div className="hero__shade" aria-hidden="true" />
       </div>
 
@@ -117,6 +118,63 @@ export function TrailerExperience() {
           EN
         </span>
       </header>
+
+      {source ? (
+        <div
+          className="player-frame"
+          onMouseLeave={() => {
+            if (!isPaused) setControlsVisible(false);
+          }}
+          onMouseMove={showControlsThenFade}
+          onTouchStart={showControlsThenFade}
+        >
+          <video
+            className="hero__video"
+            onClick={togglePlayback}
+            onEnded={() => {
+              clearControlsTimer();
+              setIsPaused(true);
+              setControlsVisible(true);
+            }}
+            onError={() => setStatus("error")}
+            onPause={() => {
+              clearControlsTimer();
+              setIsPaused(true);
+              setControlsVisible(true);
+            }}
+            onPlay={() => {
+              setIsPaused(false);
+              showControlsThenFade();
+            }}
+            playsInline
+            poster="/hero-keyart.png"
+            preload="metadata"
+            ref={videoRef}
+            src={source}
+          >
+            Your browser does not support HTML video.
+          </video>
+
+          <div
+            className={`player-controls ${
+              controlsVisible ? "player-controls--visible" : ""
+            }`}
+          >
+            <button
+              aria-label={isPaused ? "Play trailer" : "Pause trailer"}
+              className="player-controls__toggle"
+              onFocus={() => setControlsVisible(true)}
+              onClick={togglePlayback}
+              type="button"
+            >
+              <span
+                aria-hidden="true"
+                className={isPaused ? "control-play" : "control-pause"}
+              />
+            </button>
+          </div>
+        </div>
+      ) : null}
 
       {status !== "ready" ? (
         <button
@@ -172,35 +230,6 @@ export function TrailerExperience() {
         </div>
       ) : null}
 
-      {status === "ready" ? (
-        <div className="player-banner">
-          <div className="player-banner__title">
-            <span>Now playing</span>
-            <strong>Monkey Quest · Official Trailer</strong>
-          </div>
-          <div className="player-banner__actions">
-            <button
-              aria-label={isPaused ? "Play trailer" : "Pause trailer"}
-              className="player-banner__toggle"
-              onClick={togglePlayback}
-              type="button"
-            >
-              <span
-                aria-hidden="true"
-                className={isPaused ? "control-play" : "control-pause"}
-              />
-              {isPaused ? "Play" : "Pause"}
-            </button>
-            <button
-              className="player-banner__return"
-              onClick={resetTrailer}
-              type="button"
-            >
-              Back to poster
-            </button>
-          </div>
-        </div>
-      ) : null}
     </section>
   );
 }
