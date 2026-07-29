@@ -302,26 +302,6 @@ a {
   margin-left: 3px;
 }
 
-.trailer-meta {
-  align-items: center;
-  color: #d8e0ec;
-  display: flex;
-  font-size: 13px;
-  gap: 11px;
-  margin-top: 24px;
-}
-
-.trailer-meta > span:first-child {
-  color: #91a4be;
-  font-size: 20px;
-}
-
-.trailer-meta i {
-  background: #6f8098;
-  height: 17px;
-  width: 1px;
-}
-
 .hero__play {
   align-items: center;
   background: rgba(2, 10, 23, 0.34);
@@ -799,11 +779,6 @@ footer > p a {
     border-radius: 11px;
     font-size: 15px;
     padding: 15px 21px;
-  }
-
-  .trailer-meta {
-    font-size: 11px;
-    margin-top: 17px;
   }
 
   .player-frame {

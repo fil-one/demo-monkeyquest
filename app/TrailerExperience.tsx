@@ -302,13 +302,6 @@ export function TrailerExperience({
           <span aria-hidden="true" />
           {copy.watchTrailer}
         </button>
-
-        <div className="trailer-meta">
-          <span aria-hidden="true">◷</span>
-          <span>1080p</span>
-          <i />
-          <span>{copy.officialTrailer}</span>
-        </div>
       </div>
 
       {status === "loading" ? (
