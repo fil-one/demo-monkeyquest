@@ -18,9 +18,25 @@ export function TrailerExperience({
   const [source, setSource] = useState<string | null>(null);
   const [isPaused, setIsPaused] = useState(true);
   const [controlsVisible, setControlsVisible] = useState(true);
+  const [currentTime, setCurrentTime] = useState(0);
+  const [duration, setDuration] = useState(0);
   const videoRef = useRef<HTMLVideoElement>(null);
   const controlsTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const copy = translations[language];
+  const progress =
+    duration > 0
+      ? Math.min(Math.max((currentTime / duration) * 100, 0), 100)
+      : 0;
+
+  const formatTime = (seconds: number) => {
+    if (!Number.isFinite(seconds) || seconds < 0) return "0:00";
+
+    const roundedSeconds = Math.floor(seconds);
+    const minutes = Math.floor(roundedSeconds / 60);
+    const remainingSeconds = roundedSeconds % 60;
+
+    return `${minutes}:${remainingSeconds.toString().padStart(2, "0")}`;
+  };
 
   const clearControlsTimer = () => {
     if (controlsTimerRef.current) {
@@ -89,6 +105,14 @@ export function TrailerExperience({
     } else {
       video.pause();
     }
+  };
+
+  const seekTo = (time: number) => {
+    const video = videoRef.current;
+    if (!video || !Number.isFinite(time)) return;
+
+    video.currentTime = time;
+    setCurrentTime(time);
   };
 
   return (
@@ -165,6 +189,14 @@ export function TrailerExperience({
               setControlsVisible(true);
             }}
             onError={() => setStatus("error")}
+            onDurationChange={(event) => {
+              const nextDuration = event.currentTarget.duration;
+              setDuration(Number.isFinite(nextDuration) ? nextDuration : 0);
+            }}
+            onLoadedMetadata={(event) => {
+              const nextDuration = event.currentTarget.duration;
+              setDuration(Number.isFinite(nextDuration) ? nextDuration : 0);
+            }}
             onPause={() => {
               clearControlsTimer();
               setIsPaused(true);
@@ -174,6 +206,9 @@ export function TrailerExperience({
               setIsPaused(false);
               showControlsThenFade();
             }}
+            onTimeUpdate={(event) =>
+              setCurrentTime(event.currentTarget.currentTime)
+            }
             playsInline
             poster="/hero-keyart.png"
             preload="metadata"
@@ -200,6 +235,40 @@ export function TrailerExperience({
                 className={isPaused ? "control-play" : "control-pause"}
               />
             </button>
+
+            <div className="player-controls__timeline">
+              <input
+                aria-label={copy.seekLabel}
+                className="player-controls__seek"
+                max={duration || 1}
+                min="0"
+                onBlur={showControlsThenFade}
+                onChange={(event) => seekTo(event.currentTarget.valueAsNumber)}
+                onFocus={() => {
+                  clearControlsTimer();
+                  setControlsVisible(true);
+                }}
+                onPointerDown={() => {
+                  clearControlsTimer();
+                  setControlsVisible(true);
+                }}
+                onPointerUp={showControlsThenFade}
+                step="0.1"
+                style={{
+                  background: `linear-gradient(to right, var(--red-hot) 0%, var(--red-hot) ${progress}%, rgba(224, 234, 247, 0.34) ${progress}%, rgba(224, 234, 247, 0.34) 100%)`,
+                }}
+                type="range"
+                value={Math.min(currentTime, duration || 0)}
+              />
+              <output
+                aria-label={`${formatTime(currentTime)} / ${formatTime(duration)}`}
+                className="player-controls__time"
+              >
+                {formatTime(currentTime)}
+                <span aria-hidden="true"> / </span>
+                {formatTime(duration)}
+              </output>
+            </div>
           </div>
         </div>
       ) : null}
