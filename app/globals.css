@@ -256,6 +256,14 @@ a {
   text-transform: uppercase;
 }
 
+.studio-label:hover,
+.studio-label:focus-visible,
+.feature--studio h2 a:hover,
+.feature--studio h2 a:focus-visible {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
 .hero__copy h1 {
   font-family: var(--font-display), sans-serif;
   font-size: clamp(52px, 6vw, 84px);
@@ -589,6 +597,15 @@ a {
   margin: 2px 0 16px;
   max-width: 176px;
   padding: 8px;
+  transition:
+    box-shadow 160ms ease,
+    transform 160ms ease;
+}
+
+.toei-badge:hover,
+.toei-badge:focus-visible {
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.34);
+  transform: translateY(-2px);
 }
 
 .toei-badge img {

@@ -41,6 +41,14 @@ test("server-renders the Monkey Quest trailer page", async () => {
   assert.match(html, /Powered by/i);
   assert.match(html, /class="header-filecoin"/i);
   assert.match(html, /Toei Animation/i);
+  assert.equal(
+    (
+      html.match(
+        /href="https:\/\/corp\.toei-anim\.co\.jp\/"/gi,
+      ) ?? []
+    ).length,
+    3,
+  );
   assert.match(html, /Filecoin/i);
   assert.match(html, /href="https:\/\/monkeyquest\.fil\.one\/"/i);
   assert.match(html, /<option value="ja">日本語<\/option>/i);

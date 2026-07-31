@@ -286,7 +286,12 @@ export function TrailerExperience({
       ) : null}
 
       <div className="hero__copy">
-        <span className="studio-label">{copy.studio}</span>
+        <a
+          className="studio-label"
+          href="https://corp.toei-anim.co.jp/"
+        >
+          {copy.studio}
+        </a>
         <h1 id="hero-title">{copy.title}</h1>
         <p>
           {copy.taglineLead}

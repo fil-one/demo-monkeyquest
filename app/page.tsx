@@ -42,15 +42,23 @@ export default function Home() {
           ))}
 
           <article className="feature feature--studio">
-            <div className="toei-badge">
+            <a
+              aria-label="Toei Animation"
+              className="toei-badge"
+              href="https://corp.toei-anim.co.jp/"
+            >
               <img
                 alt="Toei Animation"
                 src="/toei-animation.png"
                 width="597"
                 height="78"
               />
-            </div>
-            <h2>{copy.madeBy}</h2>
+            </a>
+            <h2>
+              {copy.madeByLead}
+              <a href="https://corp.toei-anim.co.jp/">{copy.studio}</a>
+              {copy.madeByTail}
+            </h2>
             <p>{copy.madeByCopy}</p>
           </article>
         </section>
