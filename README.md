@@ -26,9 +26,51 @@ npm run dev
 Add the same environment variables to the hosting platform. Never expose AWS
 credentials through `NEXT_PUBLIC_*` variables or commit them to the repository.
 
-## Ubuntu production deployment
+## Deploy to Ubuntu
 
-The repository includes a production setup for `monkeyquest.fil.one` using
-Nginx, systemd, and a Let's Encrypt certificate. See
-[`deploy/README.md`](deploy/README.md) for DNS requirements and deployment
-commands.
+The included deployment scripts run the app on `127.0.0.1:3000` with systemd
+and expose `monkeyquest.fil.one` through Nginx and Let's Encrypt HTTPS.
+
+Before deploying, point the domain's DNS `A` record at the node and allow
+inbound TCP traffic on ports `22`, `80`, and `443`. The node must run Ubuntu
+22.04 or newer.
+
+Connect to the node, clone the repository into the expected location, and run
+the bootstrap script:
+
+```bash
+ssh ubuntu@NODE_IP
+
+sudo mkdir -p /opt/monkeyquest
+sudo git clone https://github.com/pwrepo/monkey-quest /opt/monkeyquest/app
+cd /opt/monkeyquest/app
+
+sudo ./deploy/bootstrap-ubuntu.sh YOUR_EMAIL
+```
+
+The first bootstrap run creates the protected runtime environment file and
+then stops. Add the S3 access key and secret, save the file, and rerun the
+bootstrap:
+
+```bash
+sudoedit /etc/monkeyquest/monkeyquest.env
+sudo ./deploy/bootstrap-ubuntu.sh YOUR_EMAIL
+```
+
+Verify the service and public endpoint:
+
+```bash
+systemctl status monkeyquest --no-pager
+curl -I https://monkeyquest.fil.one
+```
+
+To deploy later updates:
+
+```bash
+cd /opt/monkeyquest/app
+sudo -u monkeyquest git pull --ff-only
+sudo ./deploy/update-ubuntu.sh
+```
+
+See [`deploy/README.md`](deploy/README.md) for certificate renewal, logs, and
+other operational commands.
