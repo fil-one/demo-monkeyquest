@@ -42,7 +42,7 @@ the bootstrap script:
 ssh ubuntu@NODE_IP
 
 sudo mkdir -p /opt/monkeyquest
-sudo git clone https://github.com/pwrepo/monkey-quest /opt/monkeyquest/app
+sudo git clone https://github.com/fil-one/demo-monkeyquest.git /opt/monkeyquest/app
 cd /opt/monkeyquest/app
 
 sudo ./deploy/bootstrap-ubuntu.sh YOUR_EMAIL
