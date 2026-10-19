@@ -71,7 +71,7 @@ export default function Home() {
               width="40"
               height="40"
             />
-            <strong>monkeyquest.fil.one</strong>
+            <strong>monkeyquest.filone.com</strong>
           </div>
           <i />
           <p>

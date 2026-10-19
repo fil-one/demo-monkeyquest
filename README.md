@@ -29,7 +29,7 @@ credentials through `NEXT_PUBLIC_*` variables or commit them to the repository.
 ## Deploy to Ubuntu
 
 The included deployment scripts run the app on `127.0.0.1:3000` with systemd
-and expose `monkeyquest.fil.one` through Nginx and Let's Encrypt HTTPS.
+and expose `monkeyquest.filone.com` through Nginx and Let's Encrypt HTTPS.
 
 Before deploying, point the domain's DNS `A` record at the node and allow
 inbound TCP traffic on ports `22`, `80`, and `443`. The node must run Ubuntu
@@ -61,7 +61,7 @@ Verify the service and public endpoint:
 
 ```bash
 systemctl status monkeyquest --no-pager
-curl -I https://monkeyquest.fil.one
+curl -I https://monkeyquest.filone.com
 ```
 
 To deploy later updates:
@@ -71,6 +71,11 @@ cd /opt/monkeyquest/app
 sudo -u monkeyquest git pull --ff-only
 sudo ./deploy/update-ubuntu.sh
 ```
+
+For an existing node changing from the previous hostname, follow the
+[hostname migration steps](deploy/README.md#migrating-an-existing-node-to-monkeyquestfilonecom).
+That migration also updates the node's runtime trusted hostname, Nginx, and
+Let's Encrypt certificate.
 
 See [`deploy/README.md`](deploy/README.md) for certificate renewal, logs, and
 other operational commands.

@@ -50,7 +50,7 @@ test("server-renders the Monkey Quest trailer page", async () => {
     3,
   );
   assert.match(html, /Filecoin/i);
-  assert.match(html, /href="https:\/\/monkeyquest\.fil\.one\/"/i);
+  assert.match(html, /href="https:\/\/monkeyquest\.filone\.com\/"/i);
   assert.match(html, /<option value="ja">日本語<\/option>/i);
   assert.doesNotMatch(html, /<nav\b|About Monkey Quest|Behind the Scenes/i);
   assert.doesNotMatch(html, /class="filecoin-panel"/i);

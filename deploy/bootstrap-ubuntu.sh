@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -Eeuo pipefail
 
-DOMAIN="monkeyquest.fil.one"
+DOMAIN="monkeyquest.filone.com"
 APP_DIR="/opt/monkeyquest/app"
 ENV_DIR="/etc/monkeyquest"
 ENV_FILE="${ENV_DIR}/monkeyquest.env"
@@ -102,6 +102,7 @@ if [[ ! -f "/etc/letsencrypt/live/${DOMAIN}/fullchain.pem" ]]; then
     --webroot \
     --webroot-path "${CERTBOT_ROOT}" \
     --domain "${DOMAIN}" \
+    --cert-name "${DOMAIN}" \
     --email "${LETSENCRYPT_EMAIL}" \
     --agree-tos \
     --non-interactive
@@ -119,5 +120,7 @@ nginx -t
 systemctl reload nginx.service
 systemctl restart monkeyquest.service
 
-curl --fail --silent --show-error "http://127.0.0.1:3000/" >/dev/null
+curl --fail --silent --show-error \
+  --retry 10 --retry-connrefused --retry-delay 1 --retry-max-time 30 \
+  "http://127.0.0.1:3000/" >/dev/null
 echo "Monkey Quest is running at https://${DOMAIN}"
