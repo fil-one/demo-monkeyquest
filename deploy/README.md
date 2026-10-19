@@ -63,6 +63,24 @@ sudo ./deploy/update-ubuntu.sh
 
 The update script does not choose a branch or pull code automatically.
 
+## Updating the trailer storage endpoint
+
+Set `S3_ENDPOINT=https://s3.us-east-1.filonecontent.com` in
+`/etc/monkeyquest/monkeyquest.env`, keeping the existing credentials, region,
+bucket, and object key:
+
+```bash
+sudoedit /etc/monkeyquest/monkeyquest.env
+sudo systemctl restart monkeyquest.service
+sudo systemctl status monkeyquest.service --no-pager
+```
+
+The signer reads this setting at runtime, so an endpoint-only change needs a
+service restart. Pulling the repository or rerunning bootstrap preserves the
+existing environment file; update that file explicitly on an existing node.
+Open the trailer on `https://monkeyquest.filone.com` to verify playback from
+the new endpoint.
+
 ## Migrating an existing node to monkeyquest.filone.com
 
 For a node currently serving `monkeyquest.fil.one`, first point the new DNS

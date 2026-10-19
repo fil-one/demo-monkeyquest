@@ -10,6 +10,9 @@ Copy `.env.example` to `.env.local` and add the S3-compatible endpoint,
 credentials, region, bucket, and object key for the private MP4. Use an access
 key that can only read the specific trailer object.
 
+The trailer storage endpoint is `https://s3.us-east-1.filonecontent.com`,
+configured through `S3_ENDPOINT`.
+
 The S3 object should be served with `Content-Type: video/mp4` and support byte
 range requests. The browser requests `/api/trailer`, receives a short-lived
 signed URL, and streams the file directly from S3.
