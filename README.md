@@ -80,5 +80,9 @@ For an existing node changing from the previous hostname, follow the
 That migration also updates the node's runtime trusted hostname, Nginx, and
 Let's Encrypt certificate.
 
+If the site still serves plain HTTP after DNS changes, use the
+[HTTPS repair command](deploy/README.md#fixing-an-http-only-site-after-dns-changes)
+to obtain the certificate and activate HTTPS without rebuilding the app.
+
 See [`deploy/README.md`](deploy/README.md) for certificate renewal, logs, and
 other operational commands.

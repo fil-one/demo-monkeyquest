@@ -6,9 +6,6 @@ APP_DIR="/opt/monkeyquest/app"
 ENV_DIR="/etc/monkeyquest"
 ENV_FILE="${ENV_DIR}/monkeyquest.env"
 SERVICE_FILE="/etc/systemd/system/monkeyquest.service"
-NGINX_AVAILABLE="/etc/nginx/sites-available/monkeyquest"
-NGINX_ENABLED="/etc/nginx/sites-enabled/monkeyquest"
-CERTBOT_ROOT="/var/www/certbot"
 LETSENCRYPT_EMAIL="${1:-}"
 
 if [[ "${EUID}" -ne 0 ]]; then
@@ -58,7 +55,6 @@ fi
 
 install -d -o root -g monkeyquest -m 0750 "${ENV_DIR}"
 install -d -o monkeyquest -g monkeyquest -m 0750 /var/lib/monkeyquest
-install -d -o www-data -g www-data -m 0755 "${CERTBOT_ROOT}"
 
 if [[ ! -f "${ENV_FILE}" ]]; then
   install -o root -g monkeyquest -m 0640 \
@@ -88,36 +84,8 @@ install -o root -g root -m 0644 \
 systemctl daemon-reload
 systemctl enable --now monkeyquest.service
 
-install -o root -g root -m 0644 \
-  "${APP_DIR}/deploy/nginx/monkeyquest-http.conf" \
-  "${NGINX_AVAILABLE}"
-ln -sfn "${NGINX_AVAILABLE}" "${NGINX_ENABLED}"
 rm -f /etc/nginx/sites-enabled/default
-nginx -t
-systemctl enable --now nginx.service
-systemctl reload nginx.service
-
-if [[ ! -f "/etc/letsencrypt/live/${DOMAIN}/fullchain.pem" ]]; then
-  certbot certonly \
-    --webroot \
-    --webroot-path "${CERTBOT_ROOT}" \
-    --domain "${DOMAIN}" \
-    --cert-name "${DOMAIN}" \
-    --email "${LETSENCRYPT_EMAIL}" \
-    --agree-tos \
-    --non-interactive
-fi
-
-install -o root -g root -m 0644 \
-  "${APP_DIR}/deploy/nginx/monkeyquest.conf" \
-  "${NGINX_AVAILABLE}"
-install -d -o root -g root -m 0755 /etc/letsencrypt/renewal-hooks/deploy
-install -o root -g root -m 0755 \
-  "${APP_DIR}/deploy/reload-nginx-after-renewal.sh" \
-  /etc/letsencrypt/renewal-hooks/deploy/reload-nginx
-
-nginx -t
-systemctl reload nginx.service
+"${APP_DIR}/deploy/configure-https-ubuntu.sh" "${LETSENCRYPT_EMAIL}"
 systemctl restart monkeyquest.service
 
 curl --fail --silent --show-error \

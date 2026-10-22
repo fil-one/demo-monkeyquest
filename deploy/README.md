@@ -63,6 +63,59 @@ sudo ./deploy/update-ubuntu.sh
 
 The update script does not choose a branch or pull code automatically.
 
+## Fixing an HTTP-only site after DNS changes
+
+Changing DNS does not obtain a certificate or activate the HTTPS server block.
+If `http://monkeyquest.filone.com` serves the page without redirecting and
+`https://monkeyquest.filone.com` refuses the connection, HTTPS has not been
+activated or inbound port 443 is blocked. The normal app update script does
+not configure Nginx or certificates.
+
+On an existing bootstrapped node, pull this release and configure HTTPS using
+your Let's Encrypt account email:
+
+```bash
+cd /opt/monkeyquest/app
+sudo -u monkeyquest git pull --ff-only
+sudo ./deploy/configure-https-ubuntu.sh YOUR_EMAIL
+```
+
+This command obtains or renews the named certificate with Certbot, installs
+the final HTTPS configuration and renewal hook, and verifies the certificate
+and HTTPS listener locally. It keeps a matching certificate until renewal is
+due, so repeating the command does not force a new certificate. The app does
+not need rebuilding or restarting. If setup fails, the script attempts to
+restore the previous Monkey Quest Nginx site files.
+
+Ensure both the provider firewall/security group and the node firewall allow
+inbound TCP ports 80 and 443. Port 80 is needed for the
+[Certbot webroot challenge](https://eff-certbot.readthedocs.io/en/stable/using.html#webroot).
+Allow a brief interruption while the temporary HTTP configuration is active.
+
+Verify from your computer after the command succeeds:
+
+```bash
+curl -I http://monkeyquest.filone.com
+curl -I https://monkeyquest.filone.com
+```
+
+The first command should return a `301` redirect to HTTPS. The second should
+complete without a certificate error. Do not use `curl -k`, which bypasses
+certificate validation. On the node, test renewal and the Nginx reload hook:
+
+```bash
+sudo certbot renew --cert-name monkeyquest.filone.com --dry-run --run-deploy-hooks
+```
+
+If setup fails, inspect the error and these diagnostics before retrying:
+
+```bash
+sudo nginx -t
+sudo certbot certificates
+sudo ss -ltnp | grep -E ':(80|443)[[:space:]]'
+sudo tail -n 80 /var/log/letsencrypt/letsencrypt.log
+```
+
 ## Updating the trailer storage endpoint
 
 Set `S3_ENDPOINT=https://s3.us-east-1.filonecontent.com` in
